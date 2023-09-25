@@ -7,7 +7,7 @@ using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
 namespace Projeto_donuz.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class TransacaoController : ControllerBase
     {
@@ -45,11 +45,11 @@ namespace Projeto_donuz.Controllers
                 clienteCPF.Saldo -= transacao.Valor;
 
 
-            _clienteRepositories.Update(clienteCPF.Id, clienteCPF);
+            await _clienteRepositories.Update(clienteCPF.Id, clienteCPF);
 
             _transacaoRepository.AdicionarTransacao(transacao);
 
-            return CreatedAtAction("ObterTodasTransacoes", new { id = transacao.Id }, transacao);
+            return Ok(transacao.Id);
         }
     }
 }

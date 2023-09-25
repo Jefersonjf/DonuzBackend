@@ -8,7 +8,7 @@ using System.Security.Claims;
 
 namespace Projeto_donuz.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class ClienteController : ControllerBase
     {
@@ -28,7 +28,8 @@ namespace Projeto_donuz.Controllers
 
             var clientesVM = clientes.Select(c => new ClienteViewModel
             {
-                Name = c.Nome,
+                Id = c.Id,  
+                Nome = c.Nome,
                 CPF = c.CPF,
                 Endereco = c.Endereco,
                 Telefone = c.Telefone,
@@ -50,8 +51,9 @@ namespace Projeto_donuz.Controllers
                 return NotFound("Id não localizado");
 
             var clienteVM = new ClienteViewModel
-            {
-                Name = cliente.Nome,
+            {   
+                Id = id,
+                Nome = cliente.Nome,
                 CPF = cliente.CPF,
                 Endereco = cliente.Endereco,
                 Telefone = cliente.Telefone,
@@ -66,7 +68,7 @@ namespace Projeto_donuz.Controllers
         public async Task<ActionResult<Cliente>> Post([FromBody] ClienteInputModel createModel)
         {
             var customer = new Cliente(
-                createModel.Name,
+                createModel.Nome,
                 createModel.CPF,
                 createModel.Endereco,
                 createModel.Telefone,
@@ -80,7 +82,8 @@ namespace Projeto_donuz.Controllers
 
             var clienteVM = new ClienteViewModel
             {
-                Name = customer.Nome,
+                Id = customer.Id,
+                Nome = customer.Nome,
                 CPF = customer.CPF,
                 Endereco = customer.Endereco,
                 Telefone = customer.Telefone,
@@ -109,23 +112,23 @@ namespace Projeto_donuz.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> Put([FromQuery] int id, [FromBody] ClienteInputModel clienteIM)
+        public async Task<ActionResult> Put([FromBody] ClienteInputModel clienteIM)
         {
-            var clientetoUpdate = await _clienteRepositories.GetById(id);
+            var clientetoUpdate = await _clienteRepositories.GetById(clienteIM.Id);
 
             if (clientetoUpdate == null)
             {
                 return NotFound("Cliente não encontrado.");
             }
-
-            clientetoUpdate.Nome = clienteIM.Name;
+            
+            clientetoUpdate.Nome = clienteIM.Nome;
             clientetoUpdate.CPF = clienteIM.CPF;
             clientetoUpdate.Endereco = clienteIM.Endereco;
             clientetoUpdate.Telefone = clienteIM.Telefone;
             clientetoUpdate.Email = clienteIM.Email;
             clientetoUpdate.Saldo = clienteIM.Saldo;
 
-            await _clienteRepositories.Update(id, clientetoUpdate);
+            await _clienteRepositories.Update(clienteIM.Id, clientetoUpdate);
             return NoContent();
         }
 
