@@ -14,7 +14,8 @@ git clone https://github.com/Jefersonjf/DonuzBackend
 Navegue até a pasta do repositório clonado e execute a aplicação do backend.
 
 #2. Rodar o Frontend
-2.1 Clone o Repositório
+
+##2.1 Clone o Repositório
 Agora, clone o repositório do frontend com o seguinte comando:
 
 bash
