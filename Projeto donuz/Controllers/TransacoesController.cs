@@ -32,8 +32,8 @@ namespace Projeto_donuz.Controllers
 
             if (transacao.Valor < 0)
             {
-                if (clienteCPF.Saldo + transacao.Valor < 0)                {
-                    return BadRequest("Saldo insuficiente para a transação de débito.");                }
+                if (clienteCPF.Saldo + transacao.Valor < 0)                
+                    return BadRequest("Saldo insuficiente para a transação de débito.");                
 
                 if (transacao == null)                
                     return BadRequest();                
